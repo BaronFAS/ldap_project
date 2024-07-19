@@ -1,16 +1,16 @@
 ﻿import ldap
 import ldap.modlist as modlist
 
-from ldap_project.constants import (
+from constants import (
     # USERS,
-    # USER,
+    USER,
     LDAP_SERVER,
     LDAP_ADMIN_DN,
     LDAP_ADMIN_PASSWORD,
     SEARCH_BASE,
     SEARCH_ATTRIBUTES
 )
-from ldap_project.utils import (
+from utils import (
     encode_attributes,
     process_search_results_user_by_uid,
     process_search_results_users_list,
@@ -126,14 +126,14 @@ def get_user_by_uid(uid):
 if __name__ == "__main__":
     # add_new_user(USER)
     # add_new_user_list(USERS)
-    users = get_users_list()
-    for user in users:
-        print(user)
-    # uid = "testuser10"
-    # if user := get_user_by_uid(uid):
+    # users = get_users_list()
+    # for user in users:
     #     print(user)
-    # else:
-    #     print(f"User with uid {uid} not found")
+    uid = "testuser11"
+    if user := get_user_by_uid(uid):
+        print(user)
+    else:
+        print(f"User with uid {uid} not found")
     # if delete_user_by_uid(uid):
     #     print(f"User with uid {uid} has been deleted.")
     # else:
