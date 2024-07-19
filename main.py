@@ -1,86 +1,20 @@
 ﻿import ldap
 import ldap.modlist as modlist
 
-# Определение тестовых пользователей
-USERS = [
-    {
-        "dn": "uid=testuser9,ou=users,dc=example,dc=com",
-        "attributes": {
-            "objectClass": ["inetOrgPerson"],
-            "cn": "Test User9",
-            "sn": "User9",
-            "uid": "testuser9",
-            "userPassword": "testpassword"
-        }
-    },
-    {
-        "dn": "uid=testuser10,ou=users,dc=example,dc=com",
-        "attributes": {
-            "objectClass": ["inetOrgPerson"],
-            "cn": "Test User10",
-            "sn": "User10",
-            "uid": "testuser10",
-            "userPassword": "testpassword"
-        }
-    }
-]
-USER = {
-    "dn": "uid=testuser11,ou=users,dc=example,dc=com",
-    "attributes": {
-        "objectClass": ["inetOrgPerson"],
-        "cn": "Test User11",
-        "sn": "User11",
-        "uid": "testuser11",
-        "userPassword": "testpassword"
-        }
-}
-
-# Параметры подключения к LDAP серверу
-LDAP_SERVER = "ldap://localhost"
-LDAP_ADMIN_DN = "cn=admin,dc=example,dc=com"
-LDAP_ADMIN_PASSWORD = "admin"
-SEARCH_BASE = "ou=users,dc=example,dc=com"
-SEARCH_ATTRIBUTES = ["uid", "cn", "sn"]
-
-
-def process_search_results_user_by_id(results):
-    if results:
-        dn, entry = results[0]
-        user = {}
-        for attr, values in entry.items():
-            if isinstance(values[0], bytes):
-                user[attr] = values[0].decode("utf-8")
-            user[attr] = values[0]
-        return user
-    return None
-
-
-def process_search_results_users_list(results):
-    """
-    Обрабатывает результаты поиска и преобразует
-    байтовые строки в строки при необходимости.
-    """
-    users = []
-    for dn, entry in results:
-        if dn:
-            user = {}
-            for attr, values in entry.items():
-                if isinstance(values[0], bytes):
-                    user[attr] = values[0].decode("utf-8")
-                user[attr] = values[0]
-            users.append(user)
-    return users
-
-
-def encode_attributes(attributes):
-    """Преобразует строк в байтовые строки."""
-    encoded_attributes = {}
-    for key, value in attributes.items():
-        if isinstance(value, list):
-            encoded_attributes[key] = [v.encode("utf-8") for v in value]
-        else:
-            encoded_attributes[key] = value.encode("utf-8")
-    return encoded_attributes
+from ldap_project.constants import (
+    # USERS,
+    # USER,
+    LDAP_SERVER,
+    LDAP_ADMIN_DN,
+    LDAP_ADMIN_PASSWORD,
+    SEARCH_BASE,
+    SEARCH_ATTRIBUTES
+)
+from ldap_project.utils import (
+    encode_attributes,
+    process_search_results_user_by_uid,
+    process_search_results_users_list,
+)
 
 
 def change_user_by_uid(uid, changes):
@@ -186,20 +120,20 @@ def get_user_by_uid(uid):
         SEARCH_BASE, ldap.SCOPE_SUBTREE, search_filter, SEARCH_ATTRIBUTES
     )
     ldap_conn.unbind_s()
-    return process_search_results_user_by_id(results)
+    return process_search_results_user_by_uid(results)
 
 
 if __name__ == "__main__":
     # add_new_user(USER)
     # add_new_user_list(USERS)
-    # users = get_users_list()
-    # for user in users:
-    #     print(user)
-    uid = "testuser10"
-    if user := get_user_by_uid(uid):
+    users = get_users_list()
+    for user in users:
         print(user)
-    else:
-        print(f"User with uid {uid} not found")
+    # uid = "testuser10"
+    # if user := get_user_by_uid(uid):
+    #     print(user)
+    # else:
+    #     print(f"User with uid {uid} not found")
     # if delete_user_by_uid(uid):
     #     print(f"User with uid {uid} has been deleted.")
     # else:
