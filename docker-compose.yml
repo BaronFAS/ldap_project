@@ -1,0 +1,18 @@
+﻿version: '3.8'
+
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: openldap
+    env_file:
+      - .env
+    ports:
+      - "389:389"
+      - "636:636"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+
+volumes:
+  ldap_data:
+  ldap_config:
