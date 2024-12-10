@@ -1,0 +1,51 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "2.31.0"
+Django = "5.0.2"
+django-scopes = "2.0.0"
+djangorestframework = "3.15.1"
+django-cors-headers = "4.3.1"
+djangorestframework-camel-case="1.4.2"
+djangorestframework-simplejwt="5.3.1"
+pydantic = {extras = ["dotenv"], version = "*"}
+pydantic-settings="2.2.1"
+python-dotenv = "1.0.1"
+drf-jwt = "1.19.2"
+drf-yasg = "1.21.7"
+drf-nested-routers = "0.93.5"
+django-safedelete = "1.3.3"
+pyasn1 = "0.6.0"
+pyasn1_modules = "0.4.0"
+python-ldap = "3.4.4"
+tqdm = "4.66.4"
+
+[dev-packages]
+isort = "5.13.2"
+flake8 = "<5"
+flake8-isort = "6.1.1"
+flake8-quotes = "3.4.0"
+flake8-debugger = "4.1.2"
+flake8-broken-line = "0.6.0"
+flake8-comprehensions = "3.14.0"
+flake8-bugbear = "<23"
+flake8-bandit = "<4"
+flake8-black = "0.3.6"
+pytest = "8.1.1"
+pytest-asyncio = "0.23.6"
+pytest-factoryboy = "==2.5.1"
+pytest-django = "4.8.0"
+django-extensions = "3.2.3"
+pep8-naming = "0.13.2"
+flakeheaven = "3.3.0"
+import-linter = "2.0"
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+black = 'black --extend-exclude="^.*\b(migrations)\b.*$" .'
+isort = "isort ."
